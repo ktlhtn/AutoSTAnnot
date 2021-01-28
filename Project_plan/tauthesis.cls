@@ -477,7 +477,6 @@
 Tämän julkaisun alkuperäisyys on tarkastettu Turnitin OriginalityCheck -ohjelmalla.
 }
 \newcommand{\@engoriginalitytext}{%
-The originality of this thesis has been checked using the Turnitin OriginalityCheck service.
 }
 
 % Terminology settings
@@ -486,7 +485,7 @@ The originality of this thesis has been checked using the Turnitin OriginalityCh
     \newcommand{\@otherabstractname}{Tiivistelmä}
     \newcommand{\@university}{Tampere University}
     \newcommand{\@otheruniversity}{Tampereen yliopisto}
-    \newcommand{\@keywordname}{Keywords}
+    \newcommand{\@keywordname}{}
     \newcommand{\@otherkeywordname}{Avainsanat}
     \newcommand{\@prefacename}{Preface}
     \newcommand{\@originalitytext}{\@engoriginalitytext}
