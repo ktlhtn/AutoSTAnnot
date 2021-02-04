@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.27)  27 JAN 2021 20:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.27)  4 FEB 2021 22:19
 entering extended mode
 **./main.tex
 (main.tex
@@ -1163,7 +1163,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex.exe (file ./tau-logo-eng-eps-converted-to.pdf): PDF in
 clusion: found PDF version <1.7>, but at most version <1.5> allowed
-<tau-logo-eng-eps-converted-to.pdf, id=33, 265.99374pt x 84.315pt>
+<tau-logo-eng-eps-converted-to.pdf, id=125, 265.99374pt x 84.315pt>
 File: tau-logo-eng-eps-converted-to.pdf Graphic file (type pdf)
 <use tau-logo-eng-eps-converted-to.pdf>
 Package pdftex.def Info: tau-logo-eng-eps-converted-to.pdf  used on input line 
@@ -1222,17 +1222,14 @@ LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10.95> not available
 ) [2
 
 
-] (main.toc)
+] (main.toc [3
+
+
+])
 \tf@toc=\write8
 \openout8 = `main.toc'.
 
- (main.gls [3
-
-
-]
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.28003pt on input line 17.
-) [4
+ (main.gls [4]) [5
 
 
 ]
@@ -1246,15 +1243,22 @@ Chapter 2.
 
 ]
 Chapter 3.
-(tex/project_objectives.tex) [3
+(tex/project_objectives.tex
+LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 21.
+ [3
 
-]
+]) [4]
 Chapter 4.
-(tex/implementation.tex) [4
+(tex/implementation.tex) [5
 
 ]
+Overfull \vbox (196.48738pt too high) has occurred while \output is active []
+
+
+[6]
 Chapter 5.
-(tex/budget.tex) [5
+(tex/budget.tex) [7
 
 ]
 Chapter 6.
@@ -1262,7 +1266,7 @@ Chapter 6.
 
 LaTeX Warning: Empty bibliography on input line 289.
 
-[6
+[8
 
 ]pdfTeX warning (ext4): destination with the same identifier (name{chapter.1}) 
 has been already used, duplicate ignored
@@ -1278,7 +1282,7 @@ Overfull \hbox (11.11913pt too wide) in paragraph at lines 1--302
  []
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 305.
-[7
+[9
 
 runsystem(makeindex -s main.ist -t main.glg -o main.gls main.glo)...executed (a
 llowed).
@@ -1289,7 +1293,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 305.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 305.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 305.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2EE6D5845FA0D883343B72998752D536;368.
+(rerunfilecheck)             Checksum: DD4A357804F08185A8F7DB35BFF2024F;4010.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
@@ -1300,25 +1304,21 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 305.
 ### semi simple group (level 1) entered at line 125 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 32304 strings out of 492895
- 544040 string characters out of 3123735
- 1078313 words of memory out of 3000000
- 35703 multiletter control sequences out of 15000+200000
- 31617 words of font info for 52 fonts, out of 3000000 for 9000
+ 32101 strings out of 492895
+ 540662 string characters out of 3123735
+ 1082061 words of memory out of 3000000
+ 35486 multiletter control sequences out of 15000+200000
+ 27799 words of font info for 47 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,11n,94p,1973b,17990s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 60i,11n,94p,1973b,19229s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Kalle/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvi
 ps/base/8r.enc}<C:/Users/Kalle/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmbx12.pfb><C:/Users/Kalle/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Kalle/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Kalle/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Use
-rs/Kalle/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb>
-<C:/Users/Kalle/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr
-8a.pfb>
-Output written on main.pdf (12 pages, 84378 bytes).
+blic/amsfonts/cm/cmsy10.pfb><C:/Users/Kalle/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Kalle/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on main.pdf (15 pages, 92826 bytes).
 PDF statistics:
- 158 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
- 74 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 306 PDF objects out of 1000 (max. 8388607)
+ 53 named destinations out of 1000 (max. 500000)
+ 258 words of extra memory for PDF output out of 10000 (max. 10000000)
 

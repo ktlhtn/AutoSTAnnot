@@ -5,17 +5,63 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {2}Project Organisation}{2}{chapter.2}% 
 \defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Project members}{2}{section.2.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}Client}{2}{section.2.2}% 
+\defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Project Objectives}{3}{chapter.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}Implementation}{4}{chapter.4}% 
+\contentsline {section}{\numberline {3.1}Definition of objectives}{3}{section.3.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Budget}{5}{chapter.5}% 
+\contentsline {section}{\numberline {3.2}The basic goal}{3}{section.3.2}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Project Management}{6}{chapter.6}% 
+\contentsline {section}{\numberline {3.3}The advanced goal}{4}{section.3.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.4}Deliverables}{4}{section.3.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}Implementation}{5}{chapter.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.1}Implementation}{5}{section.4.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.2}Project initialization and planning (basic)}{6}{section.4.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.3}Preliminary study of open source video detection methods that could be applied in the project (basic)}{6}{section.4.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.4}Designing the scenes that are to be recorded using a 360 video camera and the integrated microphone array (basic)}{6}{section.4.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.5}Recording the designed scenes (basic)}{6}{section.4.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.6}Developing a set of python scripts for handling the video data frames (basic data handling methods for video) (basic)}{6}{section.4.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.7}Developing a set of python scripts for applying object detection for the video data frames (basic)}{6}{section.4.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.8}Developing a method for outputting the detected visual objects, their locations and the time interval of detection to be used together with spatial audio detection (basic)}{6}{section.4.8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.9}Testing the developed video handling scripts with the recorded video data (basic)}{6}{section.4.9}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.10}Developing a method for outputting the detected sound events, their locations and the time interval of detection to be used together with spatial audio detection (basic)}{6}{section.4.10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.11}Manually mapping visual object labels with the sound event labels to be used for automated annotation (basic)}{6}{section.4.11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.12}Documenting (this includes the final report and the presentations) (basic)}{6}{section.4.12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.13}Testing the method against manual annotation (basic)}{6}{section.4.13}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.14}Designing more complicated scenes to be recorded and testing the system with them (advanced)}{6}{section.4.14}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.15}Further developing the video detection part of the application so that different detection models could be used dynamically (as configured by the user)(advanced)}{6}{section.4.15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.16}Testing if the use of tracking algorithms could be used to further improve the accuracy of the application (if needed) (advanced)}{6}{section.4.16}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.17}Developing a graphical user interface for the mapping of visual object labels and sound event labels (advanced)}{6}{section.4.17}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {5}Budget}{7}{chapter.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {6}Project Management}{8}{chapter.6}% 
 \defcounter {refsection}{0}\relax 
 \ttl@change@i {\@ne }{chapter}{0pt}{}{\@appendixname ~\thecontentslabel :~}{}{\titlerule *[1pc]{.}\contentspage }\relax 
 \defcounter {refsection}{0}\relax 
 \ttl@change@v {chapter}{}{}{}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}References}{7}{chapter.1}% 
+\contentsline {chapter}{\numberline {A}References}{9}{chapter.1}% 
 \contentsfinish 
