@@ -1,12 +1,36 @@
-\section{Implementation}
-
 The tasks listed in the project objectives chapter will be further divided into smaller subtasks here to give a more detailed desicription of the tasks and what are the steps to complete the planned tasks. 
 
 \section{Project initialization and planning (basic)}
 
-\section{Preliminary study of open source video detection methods that could be applied in the project (basic)}
+The task is to get started with the project by discussing the objectives of the project and different possible
+methods that are used to achieve these objectives.
+
+\section{Preliminary study of open-source video object detection and object tracking methods that could be applied in the project (basic)}
+
+To automatically localize different objects in a scene, an automatic video object detection method is required.
+Nowadays these methods are commonly deep learning-based methods with a plethora of different classes. The task is
+to search for a method which would be most suitable for the task-at-hand by looking into the upsides and downsides
+of each given model for our task.
+
+Object tracking methods can also be utilized in the project. These methods are commonly based on mathematical 
+algorithms and have been found to be quite reliable even for 360 video. However, the vast majority of these 
+methods are only able to track one object at a time and this object needs to be manually selected in the initial
+video frame which adds some manual work. It is possible to combine these methods together with automatic object
+detectors to provide more reliable object detection by avoiding cases where a plain object detector could lose
+track of an object for a few frames.
+
+An important aspect is also to study how to automatically get the sound source activities of different objects.
+This information should somehow be combined with the object detection information.
 
 \section{Designing the scenes that are to be recorded using a 360 video camera and the integrated microphone array (basic)}
+
+Most of the classes that are in pre-trained object detection models are irrelevant for our task. Hence, there is a
+need to manually select which classes in the pre-trained model are required for the scenes that are to be 
+recorded. The rest of the classes can then be combined into an `other' class label.
+
+The scenes should be designed so that there are multiple sources of sound simultaneously. These objects should
+be over two meters from the video camera. Thus, the basic assumption is that the elevation angles are limited.
+Furthermore, sound sources should not be right next to each other to not make the scenes too complex.
 
 \section{Recording the designed scenes (basic)}
 
