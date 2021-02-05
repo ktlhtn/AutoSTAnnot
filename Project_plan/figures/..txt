@@ -1,1 +1,1 @@
-A dummy file to keep the file structure
+A dummy file to keep the file structure, delete this once some figure is inserted into the directory.
