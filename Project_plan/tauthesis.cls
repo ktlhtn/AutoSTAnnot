@@ -280,7 +280,7 @@
 \fi
 
 % List of symbols and abbreviations
-\RequirePackage[automake, nonumberlist, nopostdot]{glossaries}
+%\RequirePackage[automake, nonumberlist, nopostdot]{glossaries}
 
 %\renewcommand*{\glsnamefont}[1]{\textmd{#1}}
 
