@@ -34,8 +34,8 @@ Furthermore, sound sources should not be right next to each other to not make th
 
 \section{Recording the designed scenes (basic)}
 After the recording location is selected, the recording of the videos starts. Since the aim is to determine 
-the location and time of different sound sources in the same recording, we will cover different object in the 
-same video clips. These objects can be adults talking, kid crying, dog barking, bird singing and so on.
+the location and time of different sound sources in the same recording, we will cover different objects in the 
+same video clips. These objects can be adults talking, a kid crying, a dog barking, a bird singing, and so on.
 
 \section{Developing a set of python scripts for handling the video data frames (basic data handling methods for video) (basic)}
 
@@ -44,11 +44,13 @@ same video clips. These objects can be adults talking, kid crying, dog barking, 
 \section{Developing a method for outputting the detected visual objects, their locations and the time interval of detection to be used together with spatial audio detection (basic)}
 
 \section{Testing the developed video handling scripts with the recorded video data (basic)}
-Object detection, recognition and tracking has long been an indispensable need for computer vision applications. 
-YOLO is a method is used to detect or track single or multiple object what is in the camera's field of view. 
-YOLO came on the computer vision scene with the seminal 2015 paper by Joseph Redmon et al. “You Only Look Once: Unified, Real-Time Object Detection,” 
-and immediately got a lot of attention by fellow computer vision researchers. 
-In our project YOLO file will be modified such a that way to detect the objects captured by camera.
+
+There has long been an indispensable need for object detection, recognition and tracking in computer vision
+applications. YOLO is a method which is used to detect or track single or multiple objects that are in the
+camera's field of view. YOLO came on the computer vision scene with the seminal 2015 paper by Joseph Redmon et al.
+“You Only Look Once: Unified, Real-Time Object Detection,” and immediately got a lot of attention by fellow
+computer vision researchers. In our project, YOLO will be modified such that it detects all of the necessary
+objects that appear as groud truth sound sources in the recorded scenes of the project.
 
 \section{Developing a method for outputting the detected sound events, their locations and the time interval of detection to be used together with spatial audio detection (basic)}
 
@@ -65,6 +67,3 @@ In our project YOLO file will be modified such a that way to detect the objects 
 \section{Testing if the use of tracking algorithms could be used to further improve the accuracy of the application (if needed) (advanced)}
 
 \section{Developing a graphical user interface for the mapping of visual object labels and sound event labels (advanced)}
-
-
-
