@@ -43,7 +43,7 @@ singing, and so on.
 
 \subsection{Developing a set of Python scripts for handling the video data frames (basic data handling methods for video) (basic)}
 
-The 360 video data frames need to be processed before they can be further used with object detection and
+The 360-video data frames need to be processed before they can be further used with object detection and
 tracking methods. These will be most probably implemented with a set of Python scripts, although the use of Matlab
 is possible as well.
 
@@ -60,7 +60,7 @@ track single or multiple objects that are in the camera's field of view. YOLO ca
 with the seminal 2015 paper by Joseph Redmon et al. “You Only Look Once: Unified, Real-Time Object Detection,”
 and immediately got a lot of attention by fellow computer vision researchers. In our project, the latest version
 of YOLO (YOLOv4) will be modified such that it detects all of the necessary objects that appear as ground truth
-sound sources in the recorded scenes of the project. Since YOLO is not originally designed for 360 video, a
+sound sources in the recorded scenes of the project. Since YOLO is not originally designed for 360-video, a
 mapping needs to be defined for the 360 videos in order to be processed by YOLO.
 
 \subsection{Developing a method for outputting the detected visual objects, their locations and the time interval of detection to be used together with spatial audio detection (basic)}
@@ -70,8 +70,7 @@ intervals of detection should be used together with spatial audio detection.
 
 \subsection{Testing the developed video handling scripts with the recorded video data (basic)}
 
-After proper video processing methods have been established, these methods will be tested for the recorded 360
-video data to verify their real-life performance.
+After proper video processing methods have been established, these methods will be tested for the recorded 360-video data to verify their real-life performance.
 
 \subsection{Developing a method for outputting the detected sound events, their locations and the time interval of detection (basic)}
 
@@ -98,9 +97,8 @@ that are provided from this project.
 
 \subsection{Testing the method against manual annotation (basic)}
 
-Since the sole purpose of the project is to provide a proof-of-concept that similar methods can be used to save 
-manual annotation effort, the method needs to be tested against real manual annotation. The method is considered
-inapplicable for real-life purposes if the method is too laborious or if it is too inaccurate compared to manual
+The sole purpose of the project is to investigate if a method for reducing manual labour related to data annotation is possible to develop by combining video and audio detection models. Therefore the developed method needs to be tested against real manual annotation. The method is considered
+inapplicable for real-life purposes if it is too laborious or inaccurate compared to manual
 annotation.
 
 \subsection{More complicated scenes with more events and more sounds (advanced)}
