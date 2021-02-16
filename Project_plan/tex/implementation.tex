@@ -55,12 +55,12 @@ of Matlab is possible as well, the use of Python is convenient since it is an op
 which the majority of recent state-of-the-art tools have been implemented in signal processing and machine 
 learning tasks.
 
-One of the most prominent object detection methods nowadays is YOLO, which is a method which is used to detect or
-track single or multiple objects that are in the camera's field of view. YOLO came into the computer vision scene
-with the seminal 2015 paper by Joseph Redmon et al. “You Only Look Once: Unified, Real-Time Object Detection,”
-and immediately got a lot of attention by fellow computer vision researchers. In our project, the latest version
-of YOLO (YOLOv4) will be modified such that it detects all of the necessary objects that appear as ground truth
-sound sources in the recorded scenes of the project. Since YOLO is not originally designed for 360-video, a
+One of the most prominent object detection methods nowadays is You Only Look Once (YOLO) which was presented by
+Redmon et al. \cite{yolo_paper} in 2016. YOLO is a method which is used to detect or track single or multiple
+objects that are in the camera's field of view. After coming into the computer vision scene, YOLO immediately got
+a lot of attention by fellow computer vision researchers. In our project, the latest version of YOLO (YOLOv4
+\cite{yolov4_paper}) will be modified such that it detects all of the necessary objects that appear as ground
+truth sound sources in the recorded scenes of the project. Since YOLO is not originally designed for 360-video, a
 mapping needs to be defined for the 360 videos in order to be processed by YOLO.
 
 \subsection{Developing a method for outputting the detected visual objects, their locations and the time interval of detection to be used together with spatial audio detection (basic)}
@@ -82,13 +82,13 @@ An important question is that how to get the audio activities for each class.
 \subsection{Manually mapping visual object labels with the sound event labels to be used for automated annotation (basic)}
 
 The visual object labels need to be mapped to the sound event labels in order to be used in automated annotation.
-Since the visual the methods that provide the object labels and sound event labels probably output different
-kinds of labels, a mapping between these labels needs to be defined manually. For example, the method for audio
-event labels might only provide a `vehicle' label since audio classification between different vehicles is 
-difficult, but on the other hand the method for visual object labels might give labels such as `car', `truck' and
-`taxi' since it is easier to differentiate these kinds of objects visually. In this example case, all of the 
-three labels given by the visual object detector would be mapped to the common label `vehicle' provided by the
-audio event classifier.
+Since the methods that provide the visual object labels and sound event labels probably output different kinds of
+labels, a mapping between these labels needs to be defined manually. For example, the method for audio event
+labels might only provide a `vehicle' label since audio classification between different vehicles is difficult,
+but on the other hand the method for visual object labels might give labels such as `car', `truck' and `taxi'
+since it is easier to differentiate these kinds of objects visually. In this example case, all of the three
+labels given by the visual object detector would be mapped to the common label `vehicle' provided by the audio
+event classifier.
 
 \subsection{Documenting (basic)}
 
