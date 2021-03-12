@@ -128,6 +128,10 @@ def realign_bbox(center_x, center_y, width, height, face):
         elif x == -2: return -pi/2
         else: return atan(4*x/(4-x**2))
 
+    if face == 3:
+    	face = -1
+
+    	
     xp = 4*(center_x-0.5)
     phi = safe_atan(xp)
     phi = phi + face*pi/2
@@ -149,7 +153,11 @@ def realign_bbox(center_x, center_y, width, height, face):
     pano_width = realign_border(center_x, width)/(2*pi)
     pano_height = realign_border(center_y, height)/pi
 
+    #print(face)
+    #print(center_phi)
+    #print(center_theta)
     return center_phi, center_theta, pano_width, pano_height
+    
 
 def merge_stereo(stereos):
     print('Merging the projected pictures back...')

@@ -124,6 +124,7 @@ class Yolo():
         frame_height = frame.shape[0]
         frame_width = frame.shape[1]
 
+
         # Scan through all the bounding boxes output from the network and keep only the
         # ones with high confidence scores. Assign the box's class label as the class
         # with the highest score.
@@ -131,6 +132,8 @@ class Yolo():
         confidences = []
         boxes = []
         for detection in output:
+            #print(detection[0])
+            #print(detection[1])
             scores = detection[5:]
             class_id = np.argmax(scores)
             confidence = scores[class_id]
@@ -148,7 +151,7 @@ class Yolo():
         # Perform non maximum suppression to eliminate redundant overlapping boxes with
         # lower confidences.
         indices = cv2.dnn.NMSBoxes(boxes, confidences, CF_THRESHOLD, NMS_THRESHOLD)
-
+        
         return class_ids, confidences, boxes, indices
 
     def process_output(self, input_img, frames):
@@ -175,23 +178,40 @@ class Yolo():
             #Added for debugging
             #The yolo network returns detections for three different BB sizes
             #Imshow jus to see that the pano2stereo returns correct faces for a frame 
-            print(np.shape(output))
-            print(np.shape(frame)) 
-            plt.imshow(frame/255)
-            plt.show()
+            #print(np.shape(output))
+            #print(np.shape(frame)) 
+            #plt.imshow(frame/255)
+            #plt.show()
+
+            #class_ids, confidences, boxes, indices = self.nms_selection(frame, output)
+            #print('Painting Bounding Boxes..')
+            #print(np.shape(boxes))
+            #for j in indices:
+            #    j = j[0]
+            #    box = boxes[j]
+            #   left = box[0]
+            #    top = box[1]
+            #    width = box[2]
+            #    height = box[3]
+
+            #    test_img = self.draw_bbox(frame, class_ids[j], confidences[j],
+            #                   left, top, left + width, top + height)
+            #print("face "+str())
+            #plt.imshow(test_img/255)
+            #plt.show()
+            #input()
             #/Added for debugging
 
             for i in range(output.shape[0]):
                 #Added for debugging
                 #This just prints the maximum confidence and class id for each frame, just so see if there are any
-                scores = output[i, 5:]
-                class_id = np.argmax(scores)
-                confidence = scores[class_id] 
-                if confidence > 0:
-                    print(confidence)
-                    print(class_id)
+                #scores = output[i, 5:]
+                #class_id = np.argmax(scores)
+                #confidence = scores[class_id] 
+                #if confidence > 0:
+                    #print(confidence)
+                    #print(class_id)
                 #/Added for debugging
-
                 output[i, 0], output[i, 1], output[i, 2], output[i, 3] =\
                 realign_bbox(output[i, 0], output[i, 1], output[i, 2], output[i, 3], face)
             if not first_flag:
@@ -211,9 +231,12 @@ class Yolo():
             top = box[1]
             width = box[2]
             height = box[3]
-            self.draw_bbox(base_frame, class_ids[i], confidences[i],
+            base_frame = self.draw_bbox(base_frame, class_ids[i], confidences[i],
                            left, top, left + width, top + height)
 
+        #plt.imshow(base_frame/255)
+        #plt.show()
+        #input()
         return base_frame
 
 def main():
@@ -222,21 +245,29 @@ def main():
     '''
     my_net = Yolo()
 
+
     #Video reading added by KalleL
-    cap = cv2.VideoCapture("ricoh/vietnam_4k_1.mp4")
+    cap = cv2.VideoCapture("ricoh/gym_tracking_demo.mp4")
     #cap = cv2.VideoCapture(0)
 
     processed_video = []
+
+
     
     starting_time = time.time()
     frame_id = 0
     while True:
         _, frame = cap.read()
         #frame = cv2.flip(frame, 1)
+
+        frame_height = frame.shape[0]
+        frame_width = frame.shape[1]
         
         frame_id += 1
 
-        
+        if frame is None:
+        	break
+
         projections = pano2stereo(frame)
         frame = my_net.process_output(frame, projections)            
 
@@ -257,7 +288,7 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
 
-    out = cv2.VideoWriter('project.mp4',cv2.VideoWriter_fourcc(*'MP4V'), 10, (3840, 1920))
+    out = cv2.VideoWriter('project.mp4',cv2.VideoWriter_fourcc(*'MP4V'), 10, (frame_width, frame_height))
  
     for i in range(len(processed_video)):
         out.write(processed_video[i])
