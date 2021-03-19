@@ -13,6 +13,7 @@ from stereo import pano2stereo, realign_bbox
 import os
 import time
 import matplotlib.pyplot as plt
+import csv
 
 CF_THRESHOLD = 0.5
 NMS_THRESHOLD = 0.4
@@ -24,8 +25,8 @@ class Yolo():
     '''
     def __init__(self):
         # get model configuration and weight
-        model_configuration = 'yolov3-spp.cfg'
-        model_weight = 'yolov3-spp.weights'
+        model_configuration = 'yolov4.cfg'
+        model_weight = 'yolov4.weights'
 
         # define classes
         self.classes = None
@@ -43,7 +44,11 @@ class Yolo():
         self.cf_th = CF_THRESHOLD
         self.nms_th = NMS_THRESHOLD
         self.resolution = INPUT_RESOLUTION
+        self.outputwriter = None
         print('Model Initialization Done!')
+
+    def set_outputwriter(self, outputwriter):
+        self.outputwriter = outputwriter
 
     def detect(self, frame):
         '''
@@ -69,7 +74,7 @@ class Yolo():
             ret = np.concatenate((ret, out), axis=0)
         return ret
 
-    def draw_bbox(self, frame, class_id, conf, left, top, right, bottom):
+    def draw_bbox(self, frame, class_id, conf, left, top, right, bottom, center_x, center_y, height, width, frame_id):
         '''
         Drew a Bounding Box
 
@@ -87,6 +92,7 @@ class Yolo():
         '''
         # Draw a bounding box.
         cv2.rectangle(frame, (left, top), (right, bottom), (255, 178, 50), 3)
+        cv2.circle(frame, (center_x,center_y), radius=3, color=(0, 0, 255), thickness=3)
 
         label = '%.2f' % conf
 
@@ -94,6 +100,10 @@ class Yolo():
         if self.classes:
             assert(class_id < len(self.classes))
             label = '%s:%s' % (self.classes[class_id], label)
+        print(conf)
+
+        #Write the bounding box related detection to the csv file
+        self.outputwriter.writerow([frame_id, class_id, label, conf, center_x, center_y, height, width])
 
         #Display the label at the top of the bounding box
         label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 2, 1)
@@ -146,7 +156,7 @@ class Yolo():
                 top = int(center_y - height / 2)
                 class_ids.append(class_id)
                 confidences.append(float(confidence))
-                boxes.append([left, top, width, height])
+                boxes.append([left, top, width, height, center_x, center_y])
 
         # Perform non maximum suppression to eliminate redundant overlapping boxes with
         # lower confidences.
@@ -154,7 +164,7 @@ class Yolo():
         
         return class_ids, confidences, boxes, indices
 
-    def process_output(self, input_img, frames):
+    def process_output(self, input_img, frames, frame_id):
         '''
         Main progress in the class.
         Detecting the pics >> Calculate Re-align BBox >> NMS selection >> Draw BBox
@@ -175,43 +185,7 @@ class Yolo():
         for face, frame in enumerate(frames):
             output = self.detect(frame)
 
-            #Added for debugging
-            #The yolo network returns detections for three different BB sizes
-            #Imshow jus to see that the pano2stereo returns correct faces for a frame 
-            #print(np.shape(output))
-            #print(np.shape(frame)) 
-            #plt.imshow(frame/255)
-            #plt.show()
-
-            #class_ids, confidences, boxes, indices = self.nms_selection(frame, output)
-            #print('Painting Bounding Boxes..')
-            #print(np.shape(boxes))
-            #for j in indices:
-            #    j = j[0]
-            #    box = boxes[j]
-            #   left = box[0]
-            #    top = box[1]
-            #    width = box[2]
-            #    height = box[3]
-
-            #    test_img = self.draw_bbox(frame, class_ids[j], confidences[j],
-            #                   left, top, left + width, top + height)
-            #print("face "+str())
-            #plt.imshow(test_img/255)
-            #plt.show()
-            #input()
-            #/Added for debugging
-
             for i in range(output.shape[0]):
-                #Added for debugging
-                #This just prints the maximum confidence and class id for each frame, just so see if there are any
-                #scores = output[i, 5:]
-                #class_id = np.argmax(scores)
-                #confidence = scores[class_id] 
-                #if confidence > 0:
-                    #print(confidence)
-                    #print(class_id)
-                #/Added for debugging
                 output[i, 0], output[i, 1], output[i, 2], output[i, 3] =\
                 realign_bbox(output[i, 0], output[i, 1], output[i, 2], output[i, 3], face)
             if not first_flag:
@@ -231,12 +205,11 @@ class Yolo():
             top = box[1]
             width = box[2]
             height = box[3]
+            center_x = box[4]
+            center_y = box[5]
             base_frame = self.draw_bbox(base_frame, class_ids[i], confidences[i],
-                           left, top, left + width, top + height)
+                           left, top, left + width, top + height, center_x, center_y, height, width, frame_id)
 
-        #plt.imshow(base_frame/255)
-        #plt.show()
-        #input()
         return base_frame
 
 def main():
@@ -244,56 +217,86 @@ def main():
     For testing now..
     '''
     my_net = Yolo()
+    inputname = "recordings/R0010822_er.mov"
+    outputname = "processed_"+inputname.split("/")[1]
+    name = inputname.split("/")[1]
+    name = name.split(".")[0]
 
+    #initialize object for csv output
+    output_file = open(name+"_csv_output.csv", "w")
 
-    #Video reading added by KalleL
-    cap = cv2.VideoCapture("ricoh/gym_tracking_demo.mp4")
-    #cap = cv2.VideoCapture(0)
+    #Capture video from inputfile 
+    cap = cv2.VideoCapture(inputname)
+    
+    #Get video fps and resolution for output header
+    fps_v = int(cap.get(cv2.CAP_PROP_FPS))
+    width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))   # float `width`
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frames_total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    #initialize csv writer object
+    writer = csv.writer(output_file)
+    
+    #write header to outputfile
+    writer.writerow([inputname, fps_v, width, height])
+
+    #Set the writer object for detector object
+    my_net.set_outputwriter(writer)
 
     processed_video = []
-
 
     
     starting_time = time.time()
     frame_id = 0
-    while True:
-        _, frame = cap.read()
-        #frame = cv2.flip(frame, 1)
+    try:
+        while True:
+            _, frame = cap.read()
+            #frame = cv2.flip(frame, 1)
+            
+            frame_id += 1
+            
+            if frame is None:
+                break 
 
-        frame_height = frame.shape[0]
-        frame_width = frame.shape[1]
+            if np.mod(frame_id, 10) != 0:
+                continue
+
+
+            elapsed_time = time.time() - starting_time
+            print("Elapsed time: "+str(elapsed_time))
+            print("Frame: "+str(frame_id)+"/"+str(frames_total))
+            projections = pano2stereo(frame)
+            frame = my_net.process_output(frame, projections, frame_id)   
+
+            
+            #Frame by frame visualization if needed
+            #fps = "{:.0f} FPS".format(frame_id/elapsed_time)
+            #cv2.putText(frame, fps, (0, 700), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color=(0,255,255))
+            #cv2.putText(frame, 'Press q to quit', (1000, 700), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color=(0,0,255))
+            #cv2.imshow("Image", frame)
+
+            processed_video.append(frame)
+
+            #key = cv2.waitKey(1)
+            #if key & 0xFF == ord('q'):
+            #    break  # q to quit
+    
+    except KeyboardInterrupt:
+
+        pass
+
         
-        frame_id += 1
 
-        if frame is None:
-        	break
-
-        projections = pano2stereo(frame)
-        frame = my_net.process_output(frame, projections)            
-
-
-        elapsed_time = time.time() - starting_time
-        fps = "{:.0f} FPS".format(frame_id/elapsed_time)
-        cv2.putText(frame, fps, (0, 700), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color=(0,255,255))
-        cv2.putText(frame, 'Press q to quit', (1000, 700), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color=(0,0,255))
-        cv2.imshow("Image", frame)
-        key = cv2.waitKey(1)
-
-        processed_video.append(frame)
-
-        
-        if key & 0xFF == ord('q'):
-            break  # q to quit
 
     cap.release()
     cv2.destroyAllWindows()
-
-    out = cv2.VideoWriter('project.mp4',cv2.VideoWriter_fourcc(*'MP4V'), 10, (frame_width, frame_height))
+    
+    out = cv2.VideoWriter(outputname,cv2.VideoWriter_fourcc(*'mp4v'), fps_v, (width, height))
  
     for i in range(len(processed_video)):
         out.write(processed_video[i])
     out.release()
-
+    output_file.close()
     #output_frame = my_net.process_output(input_pano, projections)
     #cv2.imwrite(sys.argv[2], output_frame)
 
