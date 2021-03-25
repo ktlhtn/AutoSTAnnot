@@ -212,18 +212,19 @@ class Yolo():
 
         return base_frame
 
-def main():
+def main(inputfile, cwd):
     '''
     For testing now..
     '''
+
     my_net = Yolo()
-    inputname = "recordings/R0010822_er.mov"
-    outputname = "processed_"+inputname.split("/")[1]
-    name = inputname.split("/")[1]
+    inputname = inputfile
+    outputname = cwd+'\\processed\\'+'processed_'+inputname.split("\\")[-1]
+    name = inputname.split("\\")[-1]
     name = name.split(".")[0]
 
     #initialize object for csv output
-    output_file = open(name+"_csv_output.csv", "w")
+    output_file = open(cwd+'\\detections\\'+name+'_csv_output.csv', "w")
 
     #Capture video from inputfile 
     cap = cv2.VideoCapture(inputname)
@@ -258,8 +259,8 @@ def main():
             if frame is None:
                 break 
 
-            if np.mod(frame_id, 10) != 0:
-                continue
+            #if np.mod(frame_id, 1000) != 0:
+            #    continue
 
 
             elapsed_time = time.time() - starting_time
@@ -301,4 +302,24 @@ def main():
     #cv2.imwrite(sys.argv[2], output_frame)
 
 if __name__ == '__main__':
-    main()
+
+    if len(sys.argv) < 2:
+        print("No input filepath given! (Give an absolute location of the you want to process)")
+        exit()
+    inputfile = sys.argv[1]
+
+    cwd = str(os.getcwd())
+
+    if not os.path.isdir(cwd+'\\processed'):
+            os.mkdir(cwd+'\\processed')
+    
+    if not os.path.isdir(cwd+'\\detections'):
+            os.mkdir(cwd+'\\detections')
+
+    if os.path.isfile(inputfile):
+        main(inputfile, cwd)
+
+    else:
+        print("Input filepath not found")
+        exit()
+
