@@ -45,10 +45,30 @@ class Yolo():
         self.nms_th = NMS_THRESHOLD
         self.resolution = INPUT_RESOLUTION
         self.outputwriter = None
+        self.video_resolution = None
         print('Model Initialization Done!')
 
     def set_outputwriter(self, outputwriter):
         self.outputwriter = outputwriter
+
+    def set_videoresolution(self, width, height):
+        self.video_resolution = (width, height)
+
+    def write_out_to_csv(self, detections):
+
+        #detections
+        #[frame_id, class_id, label, conf, center_x, center_y, height, width]
+        #Write out coordinates and bb size as relative to frame resolution
+        frame_id = detections[0]
+        class_id = detections[1]
+        label = detections[2]
+        conf = detections[3]
+        center_x = detections[4]/self.video_resolution[0]
+        center_y = detections[5]/self.video_resolution[1]
+        height = detections[6]/self.video_resolution[1]
+        width = detections[7]/self.video_resolution[0]
+
+        self.outputwriter.writerow([frame_id, class_id, label, conf, center_x, center_y, height, width])
 
     def detect(self, frame):
         '''
@@ -103,7 +123,7 @@ class Yolo():
         print(conf)
 
         #Write the bounding box related detection to the csv file
-        self.outputwriter.writerow([frame_id, class_id, label, conf, center_x, center_y, height, width])
+        self.write_out_to_csv([frame_id, class_id, label, conf, center_x, center_y, height, width])
 
         #Display the label at the top of the bounding box
         label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 2, 1)
@@ -224,7 +244,7 @@ def main(inputfile, cwd):
     name = name.split(".")[0]
 
     #initialize object for csv output
-    output_file = open(cwd+'\\detections\\'+name+'_csv_output.csv', "w")
+    output_file = open(cwd+'\\detections\\'+name+'_csv_output.csv', "w", newline='')
 
     #Capture video from inputfile 
     cap = cv2.VideoCapture(inputname)
@@ -235,6 +255,7 @@ def main(inputfile, cwd):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frames_total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
+    my_net.set_videoresolution(width, height)
     #initialize csv writer object
     writer = csv.writer(output_file)
     
