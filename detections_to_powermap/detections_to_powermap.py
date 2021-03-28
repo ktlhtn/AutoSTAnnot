@@ -11,7 +11,6 @@ import scipy.io
 def draw_bbox(frame, detections, frame_v_id):
 
     frame_shape = np.shape(frame)
-    print(frame_shape)
     frame_width = frame_shape[1]
     frame_height = frame_shape[0]
 
@@ -51,7 +50,47 @@ def draw_bbox(frame, detections, frame_v_id):
 
 
 def crop_powermap(frame, detections):
-    pass
+    
+    frame_shape = np.shape(frame)
+    frame_width = frame_shape[1]
+    frame_height = frame_shape[0]
+
+    for detection in detections:
+
+        frame_d_id = detection[0]
+        class_id = detection[1]
+        label = detection[2]
+        conf = detection[3]
+        center_x = float(detection[4])
+        center_y = float(detection[5])
+        height = float(detection[6])        
+        width = float(detection[7])
+
+        center_x = int(center_x*frame_width)
+        center_y = int(center_y*frame_height)
+        height = int(height*frame_height)
+        width = int(width*frame_width)
+
+
+        if class_id == str(0):
+
+            top_left_corner = (int(center_x-0.5*width), int(center_y-0.5*height))
+            bottom_right_corner = (int(center_x+0.5*width), int(center_y+0.5*height))
+
+            x1 = top_left_corner[0]
+            y1 = top_left_corner[1]
+
+            x2 = bottom_right_corner[0]
+            y2 = bottom_right_corner[1]
+
+            frame[0:x1-1, :] = 0
+            frame[x2+1:-1,:] = 0
+
+            frame[:, y2+1:-1] = 0
+            frame[:, 0:y1-1] = 0
+
+        return frame
+
 
 
 
@@ -73,6 +112,8 @@ def main(inputfile, detections, cwd, mode):
     fps_d = header[1]
     width_d = header[2]
     height_d = header[3]
+    starting_time = time.time()
+    frame_id = 0
 
     if mode == '-v':
         
@@ -87,8 +128,8 @@ def main(inputfile, detections, cwd, mode):
 
         processed_video = []
 
-        starting_time = time.time()
-        frame_id = 0
+
+        
         for line in reader:
             if len(line) > 0:
                 detections_list.append(line)
@@ -127,8 +168,49 @@ def main(inputfile, detections, cwd, mode):
     if mode == '-m':
         mat = scipy.io.loadmat(inputfile)
 
-        for key in mat:
-            print(key)
+        powermap = mat["map"]
+        powermap_scaled = mat["map_scaled"]
+
+        frames_length = np.shape(powermap)[2]
+
+        for line in reader:
+            if len(line) > 0:
+                detections_list.append(line)
+
+        for i in range(frames_length):
+            frame_map = powermap[:,:,i]
+            frame_map_scaled = powermap_scaled[:,:,i]
+            detections_frame = []
+
+            frame_id += 1
+
+            elapsed_time = time.time() - starting_time
+            print("Elapsed time: "+str(elapsed_time))
+            print("Frame: "+str(frame_id)+"/"+str(frames_length))
+
+            for det in detections_list:
+                if int(det[0]) == frame_id:
+                    detections_frame.append(det)
+
+            powermap[:,:,i] = crop_powermap(frame_map, detections)
+
+            powermap_scaled[:,:,i] = crop_powermap(frame_map, detections)
+
+
+        if np.shape(powermap) != np.shape(mat["map"]):
+            print("Cropped powermap dimensions do not match")
+            exit()
+
+        if np.shape(powermap_scaled) != np.shape(mat["map_scaled"]):
+            print("Cropped powermap (scaled) dimensions do not match")
+            exit()
+
+        mat["map"] = powermap
+        mat["map_scaled"] = powermap_scaled
+
+        scipy.io.savemat(outputname, mat)
+
+
     
     detections.close()       
 
