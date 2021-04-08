@@ -74,6 +74,8 @@ def crop_powermap(frame, detections):
 
         if class_id == str(0):
 
+            print("Human detected!")
+
             top_left_corner = (int(center_x-0.5*width), int(center_y-0.5*height))
             bottom_right_corner = (int(center_x+0.5*width), int(center_y+0.5*height))
 
@@ -89,7 +91,7 @@ def crop_powermap(frame, detections):
             frame[:, y2+1:-1] = 0
             frame[:, 0:y1-1] = 0
 
-        return frame
+    return frame
 
 
 
@@ -168,7 +170,7 @@ def main(inputfile, detections, cwd, mode):
     
     #Read in a matlab .mat file and crop the content using the detections / bounding boxes made from each
     if mode == '-m':
-        mat = scipy.io.loadmat(inputfile)
+        mat = scipy.io.loadmat(inputfile, matlab_compatible=True)
 
         powermap = mat["map"]
         powermap_scaled = mat["map_scaled"]
@@ -196,11 +198,10 @@ def main(inputfile, detections, cwd, mode):
                 if int(det[0]) == frame_id:
                     detections_frame.append(det)
 
-            powermap[:,:,i] = crop_powermap(frame_map, detections)
+            powermap[:,:,i] = crop_powermap(frame_map, detections_frame)
 
-            powermap_scaled[:,:,i] = crop_powermap(frame_map, detections)
-
-
+            powermap_scaled[:,:,i] = crop_powermap(frame_map_scaled, detections_frame)
+           
         if np.shape(powermap) != np.shape(mat["map"]):
             print("Cropped powermap dimensions do not match")
             exit()
