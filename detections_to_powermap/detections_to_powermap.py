@@ -115,6 +115,8 @@ def main(inputfile, detections, cwd, mode):
     starting_time = time.time()
     frame_id = 0
 
+
+    #Read in videofile, draw bounding boxes from csv file detections per frame and output the video to a new file
     if mode == '-v':
         
         #Capture video from inputfile 
@@ -127,9 +129,8 @@ def main(inputfile, detections, cwd, mode):
         frames_total_v = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
         processed_video = []
-
-
         
+        #Read in ALL the detections from the csv file
         for line in reader:
             if len(line) > 0:
                 detections_list.append(line)
@@ -141,6 +142,7 @@ def main(inputfile, detections, cwd, mode):
             
             frame_id += 1
 
+            #Read in the detections in the csv file that are from this frame
             for det in detections_list:
                 if int(det[0]) == frame_id:
                     detections_frame.append(det)
@@ -164,7 +166,7 @@ def main(inputfile, detections, cwd, mode):
             print("Outputting video, frame: "+str(i)+"/"+str(len(processed_video)))
         out.release()
     
-
+    #Read in a matlab .mat file and crop the content using the detections / bounding boxes made from each
     if mode == '-m':
         mat = scipy.io.loadmat(inputfile)
 
@@ -173,6 +175,7 @@ def main(inputfile, detections, cwd, mode):
 
         frames_length = np.shape(powermap)[2]
 
+        #Read in all the detections from the csv file
         for line in reader:
             if len(line) > 0:
                 detections_list.append(line)
@@ -188,6 +191,7 @@ def main(inputfile, detections, cwd, mode):
             print("Elapsed time: "+str(elapsed_time))
             print("Frame: "+str(frame_id)+"/"+str(frames_length))
 
+            #The detections in the csv file that are from this frame
             for det in detections_list:
                 if int(det[0]) == frame_id:
                     detections_frame.append(det)
