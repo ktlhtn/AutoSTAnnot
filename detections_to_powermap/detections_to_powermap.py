@@ -6,6 +6,7 @@ import time
 import matplotlib.pyplot as plt
 import csv
 import scipy.io
+import copy
 
 
 def draw_bbox(frame, detections, frame_v_id):
@@ -30,20 +31,20 @@ def draw_bbox(frame, detections, frame_v_id):
         height = int(height*frame_height)
         width = int(width*frame_width)
 
-        if class_id == str(0):
+        #if class_id == str(0):
 
-            top_left_corner = (int(center_x-0.5*width), int(center_y-0.5*height))
-            bottom_right_corner = (int(center_x+0.5*width), int(center_y+0.5*height))
+        top_left_corner = (int(center_x-0.5*width), int(center_y-0.5*height))
+        bottom_right_corner = (int(center_x+0.5*width), int(center_y+0.5*height))
 
-            text_location = (int(center_x-0.5*width), int(center_y-0.5*height)+5)
-            
+        text_location = (int(center_x-0.5*width), int(center_y-0.5*height)+5)
+        
 
-            #print(top_left_corner)
-            #print(bottom_right_corner)
+        #print(top_left_corner)
+        #print(bottom_right_corner)
 
-            frame = cv2.rectangle(frame, top_left_corner, bottom_right_corner, (0,0,0), 3)
-      
-            frame = cv2.putText(frame, label, text_location, cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,0), 2)
+        frame = cv2.rectangle(frame, top_left_corner, bottom_right_corner, (0,0,0), 3)
+  
+        frame = cv2.putText(frame, label, text_location, cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,0), 2)
 
     return frame
 
@@ -54,6 +55,9 @@ def crop_powermap(frame, detections):
     frame_shape = np.shape(frame)
     frame_width = frame_shape[1]
     frame_height = frame_shape[0]
+
+    temp_frame = np.ndarray(frame_shape)
+    cropped_list = []
 
     for detection in detections:
 
@@ -71,27 +75,42 @@ def crop_powermap(frame, detections):
         height = int(height*frame_height)
         width = int(width*frame_width)
 
+        top_left_corner = (int(center_x-0.5*width), int(center_y-0.5*height))
+        bottom_right_corner = (int(center_x+0.5*width), int(center_y+0.5*height))
 
-        if class_id == str(0):
+        x1 = top_left_corner[0]
+        y1 = top_left_corner[1]
 
-            print("Human detected!")
+        x2 = bottom_right_corner[0]
+        y2 = bottom_right_corner[1]
 
-            top_left_corner = (int(center_x-0.5*width), int(center_y-0.5*height))
-            bottom_right_corner = (int(center_x+0.5*width), int(center_y+0.5*height))
+        temp_frame = copy.deepcopy(frame)
 
-            x1 = top_left_corner[0]
-            y1 = top_left_corner[1]
+        #print(np.max(frame))
+        #print(np.max(temp_frame))
 
-            x2 = bottom_right_corner[0]
-            y2 = bottom_right_corner[1]
+        temp_frame[:, 0:x1-1] = 0
+        temp_frame[:, x2+1:-1] = 0
 
-            frame[0:x1-1, :] = 0
-            frame[x2+1:-1,:] = 0
+        temp_frame[y2+1:-1, :] = 0
+        temp_frame[0:y1-1, :] = 0
 
-            frame[:, y2+1:-1] = 0
-            frame[:, 0:y1-1] = 0
+        #print(np.max(temp_frame))
+        #print("-----------------------")        
 
-    return frame
+        cropped_list.append(temp_frame)
+        
+
+    #frame_summed = np.ndarray(frame_shape)
+
+    cropped_list = np.array(cropped_list)
+    #print(np.shape(cropped_list))
+    frame_summed = np.sum(cropped_list, axis=0)
+    #print(np.shape(frame_summed))
+
+    #print(np.max(frame_summed))
+    #input()
+    return frame_summed
 
 
 
@@ -170,7 +189,7 @@ def main(inputfile, detections, cwd, mode):
     
     #Read in a matlab .mat file and crop the content using the detections / bounding boxes made from each
     if mode == '-m':
-        mat = scipy.io.loadmat(inputfile, matlab_compatible=True)
+        mat = scipy.io.loadmat(inputfile)
 
         powermap = mat["map"]
         powermap_scaled = mat["map_scaled"]
