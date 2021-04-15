@@ -22,7 +22,7 @@ def calculate_iou(box_1, box_2):
 
 
 
-def bbox_cleaner(input_csv_file, output_csv_file, overlap_threshold):
+def bbox_cleaner(input_csv_file, output_csv_file, overlap_threshold=0.000001):
     """
     Clean overlapping bounding boxes from the video object detector if a given
     overlap threshold is exceeded.
