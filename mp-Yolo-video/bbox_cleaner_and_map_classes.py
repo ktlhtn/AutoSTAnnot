@@ -15,7 +15,12 @@ def calculate_iou(box_1, box_2):
 
     poly_1 = Polygon(box_1)
     poly_2 = Polygon(box_2)
-    iou = poly_1.intersection(poly_2).area / poly_1.union(poly_2).area
+    
+    # Make sure that we are not dividing by zero
+    if poly_1.union(poly_2).area > 0:
+        iou = poly_1.intersection(poly_2).area / poly_1.union(poly_2).area
+    else:
+        iou = 0.0
     
     return iou
 
@@ -300,7 +305,7 @@ def map_classes(input_csv_file, output_csv_file, mapping_dict, mapping_names):
     
     #print('Only for testing')
     # Test the bounding box cleaner function (uncomment given parts in the function for testing)
-    #data, header, overlaps = bbox_cleaner('R01_10fps_csv_output.csv', 'R01_10fps_csv_output_bbox_cleaned.csv', 0.000001)
+    #data, header, overlaps = bbox_cleaner('R0010861_er_csv_output_errortest.csv', 'R0010861_er_csv_output_errortest_bbox_cleaned.csv', 0.000001)
     
     # Test the mapping of the classes
     #map_dict = {'0': ['68', '69', '72'], '1': ['59']}
