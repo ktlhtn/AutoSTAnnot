@@ -1,5 +1,12 @@
 AutoSTAnnot project (automated spatio-temporal training data annotation for spatial audio using 360 video detections)
 
+An example on how to use the pipeline for creating annotated training data with these tools: 
+
+
+
+
+
+
 Components:
 
 

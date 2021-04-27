@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import csv
 import scipy.io
 import copy
+from activity_from_powermap import pmap_activity as activity_writer 
 
 
 def draw_bbox(frame, detections, frame_v_id):
@@ -60,8 +61,6 @@ def draw_bbox(frame, detections, frame_v_id):
         frame = cv2.putText(frame, label, text_location, cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,0), 2)
 
     return frame
-
-
 
 def crop_powermap_compile(frame, detections):
     '''
@@ -136,8 +135,7 @@ def crop_powermap_compile(frame, detections):
     #input()
     return frame_summed
 
-
-def crop_powermaps(frame, detections, detected_classes):
+def crop_powermaps(frame, detections, detected_classes, act_writer = None):
     '''
     crop_powermap: Uses the YOLO video detection bounding boxes to crop out everything else from the frame but the contents of a bounding box,
     i.e. crops the frame using the bounding boxes
@@ -192,29 +190,32 @@ def crop_powermaps(frame, detections, detected_classes):
         #print(np.max(frame))
         #print(np.max(temp_frame))
 
+        #After this cropping operation, temp_frame is the cropped powermap for the one detection
         temp_frame[:, 0:x1-1] = 0
         temp_frame[:, x2+1:-1] = 0
 
         temp_frame[y2+1:-1, :] = 0
         temp_frame[0:y1-1, :] = 0
 
+        #Cropped detection appended to a class specific array
         for det_c in detected_classes:
             if det_c == class_id:
                 cropped_dict[det_c].append(temp_frame)
             else:
                 cropped_dict[det_c].append(empty_frame)
 
+        if act_writer != None:
+            act_writer.write_out_activity(detection, temp_frame)
+
         #print(np.max(temp_frame))
         #print("-----------------------")        
 
-        
+    #Sum all the class specific crops to one frame array, so that each crop is present in the single output frame
     for det_c in cropped_dict:
         cropped_dict[det_c] = np.array(cropped_dict[det_c])
         cropped_dict[det_c] = np.sum(cropped_dict[det_c], axis=0)   
 
     return cropped_dict
-
-
 
 def output_video(inputfile, detections, cwd):
 
@@ -388,6 +389,8 @@ def output_powermaps(inputfile, detections, cwd):
     class_powermaps = {}
     class_powermaps_scaled = {}
 
+    act_writer = activity_writer(cwd, name, header, 500)
+
     #Read in all the detections from the csv file
     for line in reader:
         if len(line) > 0:
@@ -415,8 +418,8 @@ def output_powermaps(inputfile, detections, cwd):
             if int(det[0]) == frame_id:
                 detections_frame.append(det)
 
-        powermaps = crop_powermaps(frame_map, detections_frame, class_powermaps.keys())
-        powermaps_scaled = crop_powermaps(frame_map_scaled, detections_frame, class_powermaps.keys())
+        powermaps = crop_powermaps(frame_map, detections_frame, class_powermaps.keys(), None)
+        powermaps_scaled = crop_powermaps(frame_map_scaled, detections_frame, class_powermaps.keys(), act_writer)
 
         for key, value in class_powermaps.items():
             class_powermaps[key].append(powermaps[key])
@@ -441,7 +444,8 @@ def output_powermaps(inputfile, detections, cwd):
 
         scipy.io.savemat(out_split[0]+"processed"+"_"+str(key)+"_"+out_split[1], mat)
 
-    detections.close()       
+    detections.close()
+    act_writer.close_writer_handle()      
 
 if __name__ == '__main__':
 
@@ -473,6 +477,9 @@ if __name__ == '__main__':
 
     if not os.path.isdir(cwd+'\\processed'):
             os.mkdir(cwd+'\\processed')
+
+    if not os.path.isdir(cwd+'\\activity'):
+        os.mkdir(cwd+'\\activity')
 
     if os.path.isfile(inputfile):
         if mode == "-v":
