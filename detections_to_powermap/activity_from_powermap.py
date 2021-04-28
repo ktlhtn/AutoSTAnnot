@@ -10,20 +10,41 @@ class pmap_activity:
     '''
     def __init__(self, cwd, outputname, header, activity_threshold=1):
 
+        '''
+        Class constructor
 
+        Inputs:
+        cwd: String, the directory path of the current working directory
+        outputname: String, the filename for the outputted csv file that has the detections listed in it
+        header: String, The header line (the very first line) to be written to the detections .csv file, it has the filename, resolution and framerate
+        of the original video from which the detections were made
+        activity_threshold: A threshold parameter that is used to determine the audio activity state for the detection, if the sum of the cropped
+        powermap is over this threshold, the activity is set to one. Zero otherwise. 
+
+        '''
+
+        #Define output file, open file handle
         self.output_file = open(cwd+'\\activity\\'+outputname+'_activity'+'_csv_output.csv', "w", newline='')
 
+        #Initialize csv writer
         self.writer = csv.writer(self.output_file)
         self.writer.writerow(header)
 
         self.activity_t = activity_threshold
 
     def close_writer_handle(self):
-
+        #close file handle
         self.output_file.close()
 
 
     def sum_bb_power(self, powermap_frame):
+
+        '''
+        Sum the energy of a powermap array (all the values in the array summed into one)
+        inputs:
+        powermap_frame, np.ndarray
+        
+        '''
 
         pm_vector = np.concatenate(powermap_frame)
 
@@ -32,6 +53,17 @@ class pmap_activity:
         return pm_sum
 
     def write_out_activity(self, detection, frame):
+
+        '''
+        Calculates the energy sum for frame and determines the audio activity state for the detection by comparing the summed value to the threshold
+        value.
+
+        inputs:
+        detection, a single yolo detection array for the frame (frame_id)
+
+        Adds the spherical coordinates of the bounding box center coordinates and the audio activity state to the detection information before
+        outputting the detection as a new line to the output csv-file
+        '''
 
         frame_id = detection[0]
         class_id = detection[1]
