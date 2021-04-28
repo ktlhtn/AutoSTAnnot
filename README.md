@@ -5,8 +5,6 @@ An example on how to use the pipeline for creating annotated training data with 
 
 
 
-
-
 Components:
 
 
