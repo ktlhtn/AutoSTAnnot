@@ -1,4 +1,12 @@
 '''
+This code is based on https://github.com/keevin60907/mp-YOLO released under the MIT-license, license description is found in the LICENSE file.
+
+The original code was modified so that it takes 360 equirectangular video files as an input and produces a .csv file as an output with all the
+framewise detections in it.
+
+'''
+
+'''
 Object Detection on Panorama pictures
 Usage:
     $ pyhton3 detection.py <pano_picture> <output_picture>

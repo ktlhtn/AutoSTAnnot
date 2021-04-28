@@ -15,6 +15,8 @@ Video detection from 360 video (mp-YOLO-video)
 
 Modified from https://github.com/keevin60907/mp-YOLO, which is based on https://arxiv.org/abs/1805.08009
 
+mp-YOLO was shared under the MIT-license (license-file under the directory mp-YOLO-video)
+
 The code is based on the mp-YOLO project found from github. There is no license file added to the project, which means it can't be used publicly as such. The project source code was modified so that it takes in a video file as a parameter and applies the detections for each frame on the video. In addition, the code also outputs a .csv file that contains all the detections (detection id, label, confidence, bounding box center coordinates, bounding box width and height in relative coordinates) for each frame. The header (first line) of the produced .csv file has the fps and resolution of the processed video. 
 
 For publicly using the projection part (from equirectangular 360 video to 4 projected sub images) without a lisence agreement from the original developer one should reimplement the projection, which is described in the research paper https://arxiv.org/abs/1805.08009

@@ -1,4 +1,10 @@
 '''
+This code is from https://github.com/keevin60907/mp-YOLO released under the MIT-license, license description is found in the LICENSE file
+
+'''
+
+
+'''
 Panorama pictures convert to stereo projection
 Usage:
     $ pyhton3 stereo.py <file_path> <d>
