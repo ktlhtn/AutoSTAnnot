@@ -112,11 +112,11 @@ def crop_powermap_compile(frame, detections):
         #print(np.max(frame))
         #print(np.max(temp_frame))
 
-        temp_frame[:, 0:x1-1] = 0
-        temp_frame[:, x2+1:-1] = 0
+        temp_frame[:, 0:x1] = 0
+        temp_frame[:, x2:frame_width] = 0
 
-        temp_frame[y2+1:-1, :] = 0
-        temp_frame[0:y1-1, :] = 0
+        temp_frame[y2:frame_height, :] = 0
+        temp_frame[0:y1, :] = 0
 
         #print(np.max(temp_frame))
         #print("-----------------------")        
@@ -191,11 +191,11 @@ def crop_powermaps(frame, detections, detected_classes, act_writer = None):
         #print(np.max(temp_frame))
 
         #After this cropping operation, temp_frame is the cropped powermap for the one detection
-        temp_frame[:, 0:x1-1] = 0
-        temp_frame[:, x2+1:-1] = 0
+        temp_frame[:, 0:x1] = 0
+        temp_frame[:, x2:frame_width] = 0
 
-        temp_frame[y2+1:-1, :] = 0
-        temp_frame[0:y1-1, :] = 0
+        temp_frame[y2:frame_height, :] = 0
+        temp_frame[0:y1, :] = 0
 
         #Cropped detection appended to a class specific array
         for det_c in detected_classes:
