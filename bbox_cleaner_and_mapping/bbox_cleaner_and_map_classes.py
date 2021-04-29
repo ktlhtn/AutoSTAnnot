@@ -2,7 +2,9 @@
 import csv
 import numpy as np
 import sys
+import os
 from shapely.geometry import Polygon
+
 
 
 def calculate_iou(box_1, box_2):
@@ -27,25 +29,15 @@ def calculate_iou(box_1, box_2):
 
 
 
-def bbox_cleaner(input_csv_file, output_csv_file, overlap_threshold=0.000001):
+
+
+def bbox_cleaner_function(input_csv_file, output_csv_file, overlap_threshold=0.000001):
     """
-    Clean overlapping bounding boxes from the video object detector if a given
-    overlap threshold is exceeded.
-    
-    input_csv_file: The name (+ path if in another directory) of the input CSV file
-    output_csv_file: The name (+ path if in another directory) of the output CSV file
-    overlap_threshold: If two overlapping bounding boxes for the same class ID overlap
-                       more than overlap_threshold, then the bounding box with a lower
-                       confidence value will discarded. Value is between [0,1]. The
-                       greater the threshold, the less strict is the choice of dropping
-                       away bounding boxes. E.g. a threshold of 0.0 will leave only one
-                       instance of a given class present in a given frame. A threshold of
-                       0.000001 will not drop out bounding boxes of the same class that
-                       are present in the same frame if there is NO overlap at all between
-                       the bounding boxes of these classes.
+    Cleans a CSV file from overlapping bounding boxes in the video detections. See function
+    "bbox_cleaner" for a thorough explanation of the arguments.
     
     """
-    
+
     header_row = None
     input_csv_data = []
     
@@ -75,8 +67,6 @@ def bbox_cleaner(input_csv_file, output_csv_file, overlap_threshold=0.000001):
     width_in_pixels = int(header_row[2])
     height_in_pixels = int(header_row[3])
     number_of_last_frame = int(input_csv_data[-1][0])
-    
-    #overlaps = [] # Uncomment for testing
     
     
     # Go through all frames one by one
@@ -145,7 +135,6 @@ def bbox_cleaner(input_csv_file, output_csv_file, overlap_threshold=0.000001):
                         
                         # Compute the overlap of the two bounding boxes
                         overlap_of_boxes = calculate_iou(bbox_element_1, bbox_element_2)
-                        #overlaps.append(overlap_of_boxes) # Uncomment for testing
                         
                         
                         # Remove the least confident element if there is a difference in
@@ -188,8 +177,72 @@ def bbox_cleaner(input_csv_file, output_csv_file, overlap_threshold=0.000001):
         writer.writerow(header_row)
         for item in cleaned_csv_data_duplicates_removed:
             writer.writerow(item)
+
+
+
+
+def bbox_cleaner(input_csv_file, output_csv_file, overlap_threshold=0.000001, num_cleans=6):
+    """
+    Clean overlapping bounding boxes from the video object detector if a given
+    overlap threshold is exceeded. The function loops for six times (default) to 
+    clean the bounding boxes.
+    
+    input_csv_file: The name (+ path if in another directory) of the input CSV file
+    output_csv_file: The name (+ path if in another directory) of the output CSV file
+    overlap_threshold: If two overlapping bounding boxes for the same class ID overlap
+                       more than overlap_threshold, then the bounding box with a lower
+                       confidence value will discarded. Value is between [0,1]. The
+                       greater the threshold, the less strict is the choice of dropping
+                       away bounding boxes. E.g. a threshold of 0.0 will leave only one
+                       instance of a given class present in a given frame. A threshold of
+                       0.000001 will not drop out bounding boxes of the same class that
+                       are present in the same frame if there is NO overlap at all between
+                       the bounding boxes of these classes.
+    num_cleans: The number of times the function performs cleaning for the video detections.
+    
+    """
+    
+    # Names of temporary files
+    temp_file_1 = 'temp_1.csv'
+    temp_file_2 = 'temp_2.csv'
+    
+    # Check that num_cleans is not less than 1
+    if num_cleans < 1:
+        sys.exit('Check that num_cleans is greater than 0.')
+    
+    # Perform cleaning num_cleans times
+    for i in range(num_cleans):
+        if i == 0:
+            if num_cleans == 1:
+                # Perform the cleaning only once
+                bbox_cleaner_function(input_csv_file, output_csv_file, overlap_threshold)
+            else:
+                # Perform the first round of cleaning
+                bbox_cleaner_function(input_csv_file, temp_file_1, overlap_threshold)
+        
+        elif i == (num_cleans-1):
+            # For the last cleaning iteration, remove the temporary files and perform a final cleaning
+            if i % 2 == 0:
+                # For even cases of i, temp_file_2 was the last temporary file to be writed into
+                bbox_cleaner_function(temp_file_2, output_csv_file, overlap_threshold)
+            else:
+                # For odd cases of i, temp_file_1 was the last temporary file to be writed into
+                bbox_cleaner_function(temp_file_1, output_csv_file, overlap_threshold)
             
-    #return cleaned_csv_data_duplicates_removed, header_row, overlaps # Uncomment for testing
+            # Remove the files
+            if os.path.exists(temp_file_1):
+                os.remove(temp_file_1)
+            if os.path.exists(temp_file_2):
+                os.remove(temp_file_2)
+        
+        else:
+            if i % 2 == 0:
+                # For even cases of i, temp_file_2 was the last temporary file to be writed into
+                bbox_cleaner_function(temp_file_2, temp_file_1, overlap_threshold)
+            else:
+                # For odd cases of i, temp_file_1 was the last temporary file to be writed into
+                bbox_cleaner_function(temp_file_1, temp_file_2, overlap_threshold)
+    
 
 
 
@@ -304,8 +357,8 @@ def map_classes(input_csv_file, output_csv_file, mapping_dict, mapping_names):
 #if __name__ == '__main__':
     
     #print('Only for testing')
-    # Test the bounding box cleaner function (uncomment given parts in the function for testing)
-    #data, header, overlaps = bbox_cleaner('R0010861_er_csv_output_errortest.csv', 'R0010861_er_csv_output_errortest_bbox_cleaned.csv', 0.000001)
+    # Test the bounding box cleaner function
+    #bbox_cleaner('R0010861_er_csv_output_errortest.csv', 'R0010861_er_csv_output_errortest_bbox_cleaned.csv', 0.000001)
     
     # Test the mapping of the classes
     #map_dict = {'0': ['68', '69', '72'], '1': ['59']}
