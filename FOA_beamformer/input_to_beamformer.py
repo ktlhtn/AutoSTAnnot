@@ -300,6 +300,9 @@ def clean_short_time_arcs(name_of_text_file, name_of_temporary_file, shortest_ti
         if item == content[-1]:
             if len(time_arc_list) >= shortest_time_arc:
                 for row in time_arc_list:
+                    # Write into a text file in the format
+                    # FILENAME_FRAMEID_CLASSID_CLASSNAME_AZIMUTH_ELEVATION_FPS_WIDTH_HEIGHT_TIMEARCINDEX
+                    # Note that frame indexing begins with 1 in MATLAB
                     element = row.split(';')
                     text = element[0] + ';' + element[1] + ';' + element[2] + ';' + element[3] + ';' + \
                         element[4] + ';' + element[5] + ';' + element[6] + ';' + element[7] + ';' + element[8] + \
