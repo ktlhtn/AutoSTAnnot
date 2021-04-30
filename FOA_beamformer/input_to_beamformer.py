@@ -277,6 +277,7 @@ def clean_short_time_arcs(name_of_text_file, name_of_temporary_file, shortest_ti
     
     name_of_text_file: The text file that is cleaned.
     name_of_temporary_file: The temporary text file where the uncleaned data is stored.
+    shortest_time_arc: The number of object detections in consecutive frames in the shortest time arc.
     
     """
     
