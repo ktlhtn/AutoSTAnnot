@@ -75,7 +75,8 @@ def beamformer_input_singleframe(input_csv_file, name_of_text_file, filesep=os.p
     converted information into a text file for the beamformer in MATLAB. The beamformer
     handles the input video frames frame by frame.
     
-    input_csv_file: The name (+ path if in another directory) of the input CSV file
+    input_csv_file: The name (+ path if in another directory) of the input CSV file. The file does NOT have coordinates
+                    transformed into azimuth and elevation.
     name_of_text_file : The name (+ path if in another directory) of the output text file
     filesep: The file separator string
     
@@ -155,7 +156,8 @@ def beamformer_input_multiframe(input_csv_file, name_of_text_file, filesep=os.pa
     converted information into a text file for the beamformer in MATLAB. The output gives the time arcs of a given
     object in the scene. This is a prototype and works only if there is only one object in a scene.
     
-    input_csv_file: The name (+ path if in another directory) of the input CSV file
+    input_csv_file: The name (+ path if in another directory) of the input CSV file. The file does NOT have coordinates
+                    transformed into azimuth and elevation.
     name_of_text_file : The name (+ path if in another directory) of the output text file
     filesep: The file separator string
     
@@ -254,7 +256,7 @@ def beamformer_input_multiframe(input_csv_file, name_of_text_file, filesep=os.pa
             elevation = projection_angle_elevation(bb_center_y, d)
             
             # Write into a text file in the format
-            # FILENAME_FRAMEID_CLASSID_CLASSNAME_AZIMUTH_ELEVATION_FPS_WIDTH_HEIGHT
+            # FILENAME_FRAMEID_CLASSID_CLASSNAME_AZIMUTH_ELEVATION_FPS_WIDTH_HEIGHT_TIMEARCINDEX
             # Note that frame indexing begins with 1 in MATLAB
             text = name_of_file + ';' + index + ';' + element[1] + ';' + element[2].split(':')[0] + ';' + \
                    str(azimuth) + ';' + str(elevation) + ';' + fps + ';' + width_in_pixels + ';' + height_in_pixels + \
@@ -317,6 +319,9 @@ def clean_short_time_arcs(name_of_text_file, name_of_temporary_file, shortest_ti
             # long enough for it to be stored
             elif len(time_arc_list) >= shortest_time_arc:
                 for row in time_arc_list:
+                    # Write into a text file in the format
+                    # FILENAME_FRAMEID_CLASSID_CLASSNAME_AZIMUTH_ELEVATION_FPS_WIDTH_HEIGHT_TIMEARCINDEX
+                    # Note that frame indexing begins with 1 in MATLAB
                     element = row.split(';')
                     text = element[0] + ';' + element[1] + ';' + element[2] + ';' + element[3] + ';' + \
                         element[4] + ';' + element[5] + ';' + element[6] + ';' + element[7] + ';' + element[8] + \
