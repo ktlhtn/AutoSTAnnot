@@ -19,11 +19,13 @@ The code is based on the mp-YOLO project found from github. There is no license 
 
 For publicly using the projection part (from equirectangular 360 video to 4 projected sub images) without a lisence agreement from the original developer one should reimplement the projection, which is described in the research paper https://arxiv.org/abs/1805.08009
 
-What it does: 
+
+*What it does:* 
 
 Reads in a 360 video file (equirectangular) and uses the yolov4 network to detects objects in the video frame by frame. Outputs the detections to a .csv file. 
 
-How to use: 
+
+*How to use:* 
 
 python detect.py $ABSOLUTE_PATH_TO_VIDEO_FILE$
 
@@ -34,11 +36,12 @@ Outputs the detections file (.csv) to directory 'detections' in cwd.
 ----------------------------------------
 **Detections to powermap or video**
 
-What it does:
+*What it does:*
 
 Reads in the detections .csv file and either draws the detected bounding boxes to the configured video file frames or crops a powermap .mat file generated with matlab from the audio data so that the powermap values within the bounding boxes are included and everything else is set to zero. 
 
-How to use: 
+
+*How to use:* 
 
 python detections_to_powermap.py $ABSOLUTE_PATH_TO_POWERMAP_FILE$ (video or .mat) $ABSOLUTE_PATH_TO_DETECTIONS_FILE$ (.csv) $MODE$
 
@@ -53,37 +56,44 @@ If -mc is selected the program assumes the input file is a .mat powermap file an
 
 **bbox_cleaner_and_map_classes.py**
 
-What it does: 
+*What it does:*
 
-How to use: 
+
+
+*How to use:* 
 
 ----------------------------------------
 
 
-**video_resampling**
+**Video resampling**
 
-What it does:
+*What it does:*
 
-Can be used to downsample the framerate of a video file. The video file from which the detections are done should have the same framerate as the powermap produced from the audio data. 
+Resamples a given video file into a different framerate using ffmpeg. The video file from which the detections are done should have the same framerate as the powermap produced from the audio data.
 
 
+*How to use:*
+
+Use the given resample_video.m MATLAB script.
 
 ----------------------------------------
 
 
 **FOA_Beamformer**
 
-What it does:
+*What it does:*
 
-How to use:
+
+*How to use:*
 
 
 ----------------------------------------
 
 **FOA_powermap**
 
-what it does:
+*what it does:*
 
-How to use: 
+
+*How to use:* 
 
 ----------------------------------------
