@@ -64,7 +64,7 @@ video_resampling
 
 What it does:
 
-Can be used to downsample the framerate of a video file. The video file from which the detections are done should have the shame framerate as the powermap produced from the audio data. 
+Can be used to downsample the framerate of a video file. The video file from which the detections are done should have the same framerate as the powermap produced from the audio data. 
 
 
 
