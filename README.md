@@ -70,7 +70,7 @@ In the file bbox_cleaner_and_map_classes.py there are two functions:
 ----------------------------------------
 
 
-**Video resampling** (resample_video)
+**Video resampling** (video_resampling)
 
 *What it does:*
 
