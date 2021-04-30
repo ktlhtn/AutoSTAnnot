@@ -34,11 +34,13 @@ Outputs the detections file (.csv) to directory 'detections' in cwd.
 ----------------------------------------
 
 ----------------------------------------
-**Detections to powermap or video**
+**Detections to powermap or video** (detections_to_powermap)
 
 *What it does:*
 
-Reads in the detections .csv file and either draws the detected bounding boxes to the configured video file frames or crops a powermap .mat file generated with matlab from the audio data so that the powermap values within the bounding boxes are included and everything else is set to zero. 
+Reads in the detections .csv file and either draws the detected bounding boxes to the configured video file frames or crops a powermap .mat file generated with matlab from the audio data so that the powermap values within the bounding boxes are included and everything else is set to zero.
+
+Additionally, there are two functions in bbox_centers_to_azimuth_elevation.py that can be used to convert the bounding box coordinates of a CSV file into spherical coordinates.
 
 
 *How to use:* 
@@ -51,7 +53,9 @@ If -v is selected the program assumes the input file (powermap) is a video file 
 
 If -m is selected the program assumes the input file is a .mat powermap file and crops the powermap with the bounding boxes so that each detected class in the whole timespan of the data is detected to a class specific powermap. The output of this mode is therefore "processed_0_map.mat" and "processed_65_map.mat" for powermap frames that have person(s) (class id 0) and mouse(s) (class id 65) detected from the video recording.
 
-If -mc is selected the program assumes the input file is a .mat powermap file and crops the powermap with the bounding boxes so that all the detected class instances are cropped in one single powermap. 
+To convert the x-coordinates of the CSV file into an azimuth angle in radians, use the function projection_angle_azimuth() in bbox_centers_to_azimuth_elevation.py. To convert the y-coordinates of the CSV file into an elevation angle in radians, use the function projection_angle_elevation() found in the same .py file.
+
+Note! If -mc is selected the program assumes the input file is a .mat powermap file and crops the powermap with the bounding boxes so that all the detected class instances are cropped in one single powermap.
 ----------------------------------------
 
 **Clean bounding boxes and map classes** (bbox_cleaner_and_mapping)
