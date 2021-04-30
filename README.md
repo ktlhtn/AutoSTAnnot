@@ -84,13 +84,16 @@ Use the given resample_video.m MATLAB script.
 ----------------------------------------
 
 
-**FOA_Beamformer**
+**Beamformer audio activities** (FOA_beamformer)
 
 *What it does:*
 
+Given a set of directions where to "listen", the beamformer determines whether or not there is audio activity detected from the given directions at each given video frame.
 
 *How to use:*
 
+1) Using functions from the file input_to_beamformer.py, convert the video detections (CSV file) into a format that the MATLAB beamformer can use. For handling objects frame-by-frame, use the function beamformer_input_singleframe(). For handling a continuous segment of frames for a given object (one object only present in video), use the function beamformer_input_multiframe().
+2) If you used the function beamformer_input_singleframe() in the previous step, use the function audio_activities_beamformer_singleframe.m to get the audio activities of each object. If you used the function beamformer_input_multiframe() in the previous step, use the function audio_activities_beamformer_multiframe.m to get the audio activities for the given object.
 
 ----------------------------------------
 
