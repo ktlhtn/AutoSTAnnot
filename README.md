@@ -65,7 +65,7 @@ If -mc is selected the program assumes the input file is a .mat powermap file an
 ----------------------------------------
 
 
-**Video resampling**
+**Video resampling** (resample_video)
 
 *What it does:*
 
