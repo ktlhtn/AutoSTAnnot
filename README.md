@@ -9,7 +9,7 @@ Components:
 
 
 ----------------------------------------
-Video detection from 360 video (mp-YOLO-video)
+**Video detection from 360 video (mp-YOLO-video)**
 
 Modified from https://github.com/keevin60907/mp-YOLO, which is based on https://arxiv.org/abs/1805.08009
 
@@ -32,7 +32,7 @@ Outputs the detections file (.csv) to directory 'detections' in cwd.
 ----------------------------------------
 
 ----------------------------------------
-Detections to powermap or video
+**Detections to powermap or video**
 
 What it does:
 
@@ -51,7 +51,7 @@ If -m is selected the program assumes the input file is a .mat powermap file and
 If -mc is selected the program assumes the input file is a .mat powermap file and crops the powermap with the bounding boxes so that all the detected class instances are cropped in one single powermap. 
 ----------------------------------------
 
-bbox_cleaner_and_map_classes.py
+**bbox_cleaner_and_map_classes.py**
 
 What it does: 
 
@@ -60,7 +60,7 @@ How to use:
 ----------------------------------------
 
 
-video_resampling
+**video_resampling**
 
 What it does:
 
@@ -71,7 +71,7 @@ Can be used to downsample the framerate of a video file. The video file from whi
 ----------------------------------------
 
 
-FOA_Beamformer
+**FOA_Beamformer**
 
 What it does:
 
@@ -80,7 +80,7 @@ How to use:
 
 ----------------------------------------
 
-FOA_powermap
+**FOA_powermap**
 
 what it does:
 
