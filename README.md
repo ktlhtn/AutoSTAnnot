@@ -94,11 +94,14 @@ Use the given resample_video.m MATLAB script.
 
 ----------------------------------------
 
-**FOA_powermap**
+**Audio powermap** (FOA_powermap)
 
-*what it does:*
+*What it does:*
 
+Converts the input video file with B-format audio into an audio powermap using the MUSIC (MUltiple SIgnal Classification) algorithm.
 
 *How to use:* 
+
+Use the given output_powermap.m MATLAB script.
 
 ----------------------------------------
