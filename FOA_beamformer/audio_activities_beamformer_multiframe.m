@@ -10,7 +10,9 @@ filename_video_detections_txt_file = 'test_multiframe.txt';
 filename_output = 'test_output_multiframe.txt';
 
 
-% Read text file row by row, save the data into data_array
+% Read text file row by row, save the data into data_array. The text file
+% is in the format
+% FILENAME_FRAMEID_CLASSID_CLASSNAME_AZIMUTH_ELEVATION_FPS_WIDTH_HEIGHT_TIMEARCINDEX
 fileID = fopen(filename_video_detections_txt_file,'r');
 tline = fgetl(fileID);
 data_array = {};
@@ -110,7 +112,7 @@ for j = 1:last_time_arc_index
 end
 
 % Create a new text file which is similar to the original text file but it
-% has audio activities appended.
+% has audio activities appended to the end. 1 = activity, 0 = no activity
 % Read text file row by row, save the data into data_array
 fileID_output = fopen(filename_output,'w');
 for i = 1:length(audio_activities)
