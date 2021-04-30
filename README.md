@@ -54,11 +54,12 @@ If -m is selected the program assumes the input file is a .mat powermap file and
 If -mc is selected the program assumes the input file is a .mat powermap file and crops the powermap with the bounding boxes so that all the detected class instances are cropped in one single powermap. 
 ----------------------------------------
 
-**bbox_cleaner_and_map_classes.py**
+**Clean bounding boxes and map classes** (bbox_cleaner_and_mapping)
 
 *What it does:*
 
-
+1) Clean overlapping bounding boxes if there are multiple instances of same object detected in the same video frame.
+2) Map class indeces and class names from YOLOv4 into arbitrary class indeces and class names.
 
 *How to use:* 
 
