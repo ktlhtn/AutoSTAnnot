@@ -63,6 +63,10 @@ If -mc is selected the program assumes the input file is a .mat powermap file an
 
 *How to use:* 
 
+In the file bbox_cleaner_and_map_classes.py there are two functions:
+1) bbox_cleaner() to clean overlapping bounding boxes of a given CSV file (output of video detections).
+2) map_classes() to map class indeces and class names from the output of the video detections (CSV file).
+
 ----------------------------------------
 
 
@@ -74,7 +78,7 @@ Resamples a given video file into a different framerate using ffmpeg. The video 
 
 
 *How to use:*
-
+ 
 Use the given resample_video.m MATLAB script.
 
 ----------------------------------------
