@@ -112,3 +112,14 @@ Converts the input video file with B-format audio into an audio powermap using t
 Use the given output_powermap.m MATLAB script.
 
 ----------------------------------------
+
+**Video detection and Tracking from 360 video (Deep-Sort)**
+
+In addition to mp-YOLO We have also tried Deep-SORT method the detect and track object of interest in 360 videos. Link to the original used script https://github.com/theAIGuysCode/yolov3_deepsort 
+
+
+*What it does:*
+
+Deep sort is one of the simplest algorithms used in object tracking. It is used for tracking multiple objects in real-time applications. Like the SORT algorithm, the Deep SORT
+algorithm uses the Kalman Filter method to predict the location of objects in the next image. Deep SORT and SORT algorithms are separated from each other by th method they use when associating objects. A convolutional neural network (CNN) is designed for object classification to be used in the Deep SORT algorithm. The convolutional neural network is trained until high accuracy is achieved. Thanks to CNN, the most distinctive feature of the object to be classified, and the most distinctive feature that distinguishes the object from other objects, is tried to be determined. In the last layer of the CNN structure, the classification of the objects is done. This classification process is done according to a vector representing the object. In the Deep SORT algorithm, a vector is obtained by passing each detected object through the neural network and using these vectors to associate the two objects. This vector is called the "appearance feature vector" According to the SORT algorithm, the Deep SORT algorithm is more successful in object association in cases such as occlusions since it is more specific and distinctive features of the object are examined to associate an object with another object.
+
