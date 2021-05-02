@@ -115,7 +115,7 @@ Use the given output_powermap.m MATLAB script.
 
 **Video detection and Tracking from 360 video (Deep-Sort)**
 
-In addition to mp-YOLO We have also tried Deep-SORT method the detect and track object of interest in 360 videos. Link to the original used script https://github.com/theAIGuysCode/yolov3_deepsort 
+In addition to mp-YOLO We have also tried Deep-SORT method the detect and track object of interest in 360 videos. Link to the original used script https://github.com/theAIGuysCode/yolov3_deepsort. We could not make it work due to missing of some dependencies such as cuda and Cython_bbox.  
 
 
 *What it does:*
