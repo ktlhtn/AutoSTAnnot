@@ -11,7 +11,7 @@ At the end of the project, there were two alternative pipelines. These pipelines
 
 In the first variant of the pipeline (Figure \ref{fig_pipeline_1}), the 360-degree video is first used as an input to a video detector...
 
-\highlight{(some more description about the video detector and the CSV output here)}
+\highlight{(some more description about the video detector and the CSV output here, also mention something very shortly about YOLOv4 and use its reference \cite{yolov4_paper})}
 
 Then, when the video detections have been acquired, it can be observed that there are multiple overlapping bounding boxes for detections of the same class instances. Therefore, a function which cleans overlapping bounding boxes was implemented. The basic idea of the iterative bounding box cleaning function is the following:
 
@@ -42,9 +42,7 @@ When inputting audio segments corresponding to multiple video frames, the pre-pr
 
 In the other variant where the audio segments of single video frames being used as an input to the beamformer, all objects within a video frame were first listed. Then, for each object detection in a video frame, the location (azimuth and elevation of bounding box center) and the corresponding audio segment (100-ms segment for 10 fps video) were used as an input for the beamformer. For the spectrogram-like energy representation produced by the beamformer, the total energy of all frequency bins was summed. If this sum exceeded a predefined threshold, then the visual object was determined to have audio activity in the given video frame.
 
-To get more intelligent temporal trajectories of visual objects, visual object tracking methods should be applied. An example of a visual object tracker is Deep Sort \highlight{(reference!)}.
-
-Deep sort is one of the simplest algorithms used in object tracking. It is used for tracking multiple objects in real-time applications. Like the SORT algorithm, the Deep SORT algorithm uses the Kalman Filter method to predict the location of objects in the next image. Deep SORT and SORT algorithms are separated from each other by the method they use when associating objects. A convolutional neural network (CNN) is designed for object classification to be used in the Deep SORT algorithm. The convolutional neural network is trained until high accuracy is achieved. Thanks to CNN, the most distinctive feature of the object to be classified, and the most distinctive feature that distinguishes the object from other objects, is tried to be determined. In the last layer of the CNN structure, the classification of the objects is done. This classification process is done according to a vector representing the object. In the Deep SORT algorithm, a vector is obtained by passing each detected object through the neural network and using these vectors to associate the two objects. This vector is called the "appearance feature vector" According to the SORT algorithm, the Deep SORT algorithm is more successful in object association in cases such as occlusions since it is more specific and distinctive features of the object are examined to associate an object with another object.
+To get more intelligent temporal trajectories of visual objects, visual object tracking methods should be applied. An example of a visual object tracker is Deep SORT \cite{deepsort}. Deep SORT is one of the simplest algorithms used in object tracking. It is used for tracking multiple objects in real-time applications. Like the SORT algorithm, the Deep SORT algorithm uses the Kalman Filter method to predict the location of objects in the next image. Deep SORT and SORT algorithms are separated from each other by the method they use when associating objects. A convolutional neural network (CNN) is designed for object classification to be used in the Deep SORT algorithm. The convolutional neural network is trained until high accuracy is achieved. Thanks to CNN, the most distinctive feature of the object to be classified, and the most distinctive feature that distinguishes the object from other objects, is tried to be determined. In the last layer of the CNN structure, the classification of the objects is done. This classification process is done according to a vector representing the object. In the Deep SORT algorithm, a vector is obtained by passing each detected object through the neural network and using these vectors to associate the two objects. This vector is called the "appearance feature vector" According to the SORT algorithm, the Deep SORT algorithm is more successful in object association in cases such as occlusions since it is more specific and distinctive features of the object are examined to associate an object with another object.
 
 To test the methods during development, small test scenes were constantly recorded during the project using the 360-video camera and the microphone array. At the end of the project, all three group members gathered at the university to produce carefully planned recordings to demonstrate and highlight functioning as well as non-functioning parts of the pipeline.
 
@@ -56,7 +54,7 @@ During the project, almost every Friday at 14:00 a MS Teams meeting was organize
 
 \section{Deliverables}
 
-The main deliverables of the present were the source codes and their thorough documentation created during the project which are provided in a GitHub repository. Additionally, the present final report is the main deliverable course-wise.
+The main deliverables of the present project were the source codes and their thorough documentation created during the project which are provided in a GitHub repository. Additionally, the present final report is the main deliverable course-wise.
 
 \section{Timetable and Workload}
 
@@ -76,11 +74,11 @@ During the project, there were no major issues hindering the progress of the pro
 
 \section{Lessons learned}
 
-What was noticed during the project was that without a visual object tracking method, it is extremely difficult to define correspondences of objects across video frames.
+What was noticed during the project was that without a visual object tracking method, it is extremely difficult to define correspondences of objects across video frames. In addition, although there are multiple different types of projections (e.g. stereographic or perspective projection) to convert a curved equirectangular image into a less curved version, it was observed that practically all of these projections have their pros and cons, and no projection is able to perfectly convert an equirectangular image into an ``ordinary" image. For example with the stereographic projection that was used in the present experiments, it was observed that objects that are very close to the camera (and therefore very curved) are not well detected by the video object detector, even though a stereographic projection is applied to the equirectangular image before using the video detector. Furthermore, what stood out as new information was that it is not possible to get an accurate sound localization using only four microphones, although four microphones might sound like a lot for conventional applications.
 
 \highlight{(More lessons learned here)}
 
-\section{Future Development Needs}
+\section{Future Development Needs} \label{sec_future_development_needs}
 
 There are several ways to improve the presented implementations. First, the implementation should be tested more vigorously. For example, now there were only five well-designed indoor scenes recorded, whereas a greater number of recordings, both indoors and outdoors, should be recorded to better highlight the pros and cons of the present pipeline. Also, the outputs presented implementations should be tested in actual sound event detector training to showcase that how do the automatically generated labels perform in real-life use cases.
 
