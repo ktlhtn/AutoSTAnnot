@@ -2129,6 +2129,11 @@
     <bcf:datasource type="file" datatype="bibtex">tex/references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1">deepsort</bcf:citekey>
+    <bcf:citekey order="2">yolov4_paper</bcf:citekey>
+    <bcf:citekey order="3">mpyolo</bcf:citekey>
+    <bcf:citekey order="4">mpyolo_paper</bcf:citekey>
+    <bcf:citekey order="5">deepsort</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
