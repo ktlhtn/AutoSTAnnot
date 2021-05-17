@@ -1,4 +1,5 @@
-AutoSTAnnot project (automated spatio-temporal training data annotation for spatial audio using 360 video detections)
+AutoSTAnnot project (automated spatio-temporal training data annotation for spatial audio using 360 video detections).
+
 Project authors: Einari Vaaras (einari.vaaras@tuni.fi), Kalle Lahtinen (kalle.t.lahtinen@tuni.fi) and Mehmet Aydin (mehmet.aydin@tuni.fi). 
 
 
