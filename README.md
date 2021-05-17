@@ -29,7 +29,6 @@ python detect.py $ABSOLUTE_PATH_TO_VIDEO_FILE$
 
 Outputs the processed video to directory 'processed' in the current working dir (cwd).
 Outputs the detections file (.csv) to directory 'detections' in cwd.
-----------------------------------------
 
 ----------------------------------------
 **Detections to powermap or video** (detections_to_powermap)
@@ -54,6 +53,7 @@ If -m is selected the program assumes the input file is a .mat powermap file and
 To convert the x-coordinates of the CSV file into an azimuth angle in radians, use the function projection_angle_azimuth() in bbox_centers_to_azimuth_elevation.py. To convert the y-coordinates of the CSV file into an elevation angle in radians, use the function projection_angle_elevation() found in the same .py file.
 
 Note! If -mc is selected the program assumes the input file is a .mat powermap file and crops the powermap with the bounding boxes so that all the detected class instances are cropped in one single powermap.
+
 ----------------------------------------
 
 **Clean bounding boxes and map classes** (bbox_cleaner_and_mapping)
