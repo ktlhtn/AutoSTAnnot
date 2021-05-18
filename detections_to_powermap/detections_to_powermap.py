@@ -146,7 +146,6 @@ def crop_powermaps(frame, detections, detected_classes, act_writer = None):
 
     outputs:
     frame - the input frame from which all the other areas are set to zero but the contents of each detection bounding box found in the frame
-    NOTE: This function compiles all the bounding boxes to one frame, it does not separate detection classes to their own output frames
     '''
     frame_shape = np.shape(frame)
     frame_width = frame_shape[1]
