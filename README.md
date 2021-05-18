@@ -54,6 +54,8 @@ To convert the x-coordinates of the CSV file into an azimuth angle in radians, u
 
 Note! If -mc is selected the program assumes the input file is a .mat powermap file and crops the powermap with the bounding boxes so that all the detected class instances are cropped in one single powermap.
 
+In addition the script uses the **activity_from_powermap.py** to infer the audio activity for each detection in a frame by summing up the total energy in the detection bounding box and comparing it to a manually defined threshold.
+
 ----------------------------------------
 
 **Clean bounding boxes and map classes** (bbox_cleaner_and_mapping)
